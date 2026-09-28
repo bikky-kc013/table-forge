@@ -1,0 +1,22 @@
+# Docker default — overridden by compose env (PGHOST=127.0.0.1 + host network).
+# The baked-in host.docker.internal value is for plain `docker run` on a
+# bridge network with --add-host=host.docker.internal:host-gateway.
+# Login in the UI with your normal system PG role + password (e.g. root/root).
+servers:
+  - desc: 'System PostgreSQL'
+    host: 'host.docker.internal'
+    port: 5432
+    sslmode: 'disable'
+    defaultdb: 'postgres'
+    pg_dump_path: '/usr/bin/pg_dump'
+    pg_dumpall_path: '/usr/bin/pg_dumpall'
+
+server:
+  listen: ':8080'
+  session_key: '' # random per-boot if empty; set PGADMIN_SESSION_KEY for multi-instance
+
+theme: 'default'
+max_rows: 30
+max_chars: 50
+extra_login_security: false
+log_level: 'info'

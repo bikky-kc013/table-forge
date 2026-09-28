@@ -1,0 +1,41 @@
+version: "3.8"
+services:
+  pg14:
+    image: postgres:14-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    ports: ["54314:5432"]
+  pg15:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    ports: ["54315:5432"]
+  pg16:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    ports: ["54316:5432"]
+  pg17:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    ports: ["54317:5432"]
+
+  tests:
+    build: .
+    depends_on: [pg14, pg15, pg16, pg17]
+    environment:
+      PGHOST: pg14
+      PGUSER: postgres
+      PGPASSWORD: postgres
+    command: ["go", "test", "./...", "-run", "Integration"]
+    volumes:
+      - .:/app

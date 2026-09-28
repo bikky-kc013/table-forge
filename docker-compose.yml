@@ -1,0 +1,70 @@
+# TableForge — `docker compose up --build` builds the React SPA (frontend/)
+# inside Docker and Go serves it at /app + the JSON API.
+#
+# PostgreSQL is NOT containerized: the app shares the HOST network and talks
+# to your systemctl PostgreSQL on 127.0.0.1:5432 — exactly like
+#   DATABASE_URL=postgresql://root:root@localhost:5432/tele
+# No pg_hba.conf change needed: localhost rules already cover it.
+# Open http://localhost:8080/app/login and log in (e.g. root / root) —
+# you land on the `postgres` db and can browse ALL databases (tele, ...).
+#
+# Knobs (no YAML edits needed):
+#   APP_PORT=18082        app listens on host :18082 (default :8080; host
+#                         network mode binds the port directly, no mapping)
+#   PGHOST / PGPORT / PGSSLMODE / PGDEFAULTDB  point at a different PG
+#   PGADMIN_SESSION_KEY=...                    share sessions across restarts
+
+name: tableforge
+
+services:
+  app:
+    build:
+      context: .
+      args:
+        VITE_APP_VERSION: ${VITE_APP_VERSION:-1.0.0}
+    image: tableforge:latest
+    restart: unless-stopped
+    # Share the host stack → PG is 127.0.0.1, same as local `go run`.
+    # (Linux only; `ports:` is ignored in host mode — APP_PORT below IS the
+    # host port via PGADMIN_LISTEN.)
+    network_mode: host
+    environment:
+      PGADMIN_LISTEN: ':${APP_PORT:-8080}'
+      PGADMIN_SESSION_KEY: ${PGADMIN_SESSION_KEY:-}
+      SPA_DIR: /app/frontend/dist
+      # Host PostgreSQL connection (overrides config/docker.yaml servers[0]).
+      PGHOST: ${PGHOST:-127.0.0.1}
+      PGPORT: ${PGPORT:-5432}
+      PGSSLMODE: ${PGSSLMODE:-disable}
+      PGDEFAULTDB: ${PGDEFAULTDB:-postgres}
+    volumes:
+      # Override the baked-in docker config with your own file:
+      #   - ./config/config.yaml:/config/config.yaml:ro
+      - pgdump:/tmp/pgdump
+    healthcheck:
+      test: ['CMD-SHELL', 'wget -qO- http://127.0.0.1:${APP_PORT:-8080}/healthz | grep -q ok']
+      interval: 15s
+      timeout: 3s
+      retries: 3
+      start_period: 15s
+
+  # --- Bridge-network alternative (macOS/Windows, or isolated networking) ---
+  # The container reaches host PG via host.docker.internal, BUT the host's
+  # pg_hba.conf must allow the compose subnet, e.g.:
+  #   host  all  all  <compose-subnet>  scram-sha-256   + systemctl reload
+  # Find the subnet via: docker inspect tableforge-app-1 --format '{{json .NetworkSettings.Networks}}'
+  # Uncomment to use, and comment out the `app` service above:
+  # app-bridge:
+  #   build: { context: . }
+  #   image: tableforge:latest
+  #   extra_hosts: ["host.docker.internal:host-gateway"]
+  #   ports: ['${APP_PORT:-8080}:8080']
+  #   environment:
+  #     PGADMIN_LISTEN: ':8080'
+  #     SPA_DIR: /app/frontend/dist
+  #     PGHOST: host.docker.internal
+  #     PGPORT: 5432
+  #     PGSSLMODE: disable
+
+volumes:
+  pgdump:

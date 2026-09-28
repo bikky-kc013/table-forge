@@ -1,0 +1,14 @@
+# Deps / build output
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+# Env overrides (examples are committed)
+.env.local
+.env.*.local
+
+# Logs / caches
+npm-debug.log*
+.vite/
+coverage/

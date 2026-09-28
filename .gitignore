@@ -1,0 +1,23 @@
+# Go
+bin/
+coverage.out
+*.exe
+*.test
+
+# Config (local dev configs may contain passwords)
+config.yaml
+config/config.yaml
+*.log
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# OS
+.DS_Store
+
+
+# Test data
+/tmp/
+

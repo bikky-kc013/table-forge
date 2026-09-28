@@ -1,0 +1,626 @@
+@import 'tailwindcss';
+
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --background: var(--color-white);
+  --foreground: var(--color-zinc-950);
+  --card: var(--color-white);
+  --card-foreground: var(--color-zinc-950);
+  --popover: var(--color-white);
+  --popover-foreground: var(--color-zinc-950);
+  --primary: var(--color-zinc-900);
+  --primary-foreground: var(--color-white);
+  --secondary: var(--color-zinc-100);
+  --secondary-foreground: var(--color-zinc-900);
+  --muted: var(--color-zinc-100);
+  --muted-foreground: var(--color-zinc-500);
+  --accent: var(--color-zinc-100);
+  --accent-foreground: var(--color-zinc-900);
+  --destructive: var(--color-red-600);
+  --destructive-foreground: var(--color-white);
+  --chart-1: var(--color-blue-500);
+  --chart-2: var(--color-green-500);
+  --chart-3: var(--color-yellow-500);
+  --chart-4: var(--color-red-500);
+  --chart-5: var(--color-purple-500);
+  --border: oklch(94% 0.004 286.32); /* between --color-zinc-100 and --color-zinc-200 */
+  --input: var(--color-zinc-200);
+  --ring: var(--color-zinc-400);
+  --radius: 0.5rem;
+}
+
+.dark {
+  --background: var(--color-zinc-950);
+  --foreground: var(--color-zinc-50);
+  --card: var(--color-zinc-950);
+  --card-foreground: var(--color-zinc-50);
+  --popover: var(--color-zinc-950);
+  --popover-foreground: var(--color-zinc-50);
+  --primary: var(--color-zinc-300);
+  --primary-foreground: var(--color-zinc-950);
+  --secondary: var(--color-zinc-800);
+  --secondary-foreground: var(--color-zinc-50);
+  --muted: var(--color-zinc-900);
+  --muted-foreground: var(--color-zinc-500);
+  --accent: var(--color-zinc-900);
+  --accent-foreground: var(--color-zinc-50);
+  --destructive: var(--color-red-600);
+  --destructive-foreground: var(--color-white);
+  --chart-1: var(--color-blue-500);
+  --chart-2: var(--color-green-500);
+  --chart-3: var(--color-yellow-500);
+  --chart-4: var(--color-red-500);
+  --chart-5: var(--color-purple-500);
+  --border: var(--color-zinc-800);
+  --input: var(--color-zinc-800);
+  --ring: var(--color-zinc-600);
+}
+
+/** Company primary color presets (data-primary set from API) **/
+[data-primary='zinc'] {
+  --primary: var(--color-zinc-900);
+  --primary-foreground: var(--color-white);
+}
+.dark[data-primary='zinc'] {
+  --primary: var(--color-zinc-300);
+  --primary-foreground: var(--color-zinc-950);
+}
+[data-primary='slate'] {
+  --primary: var(--color-slate-700);
+  --primary-foreground: var(--color-white);
+}
+.dark[data-primary='slate'] {
+  --primary: var(--color-slate-500);
+  --primary-foreground: var(--color-white);
+}
+[data-primary='blue'] {
+  --primary: var(--color-blue-600);
+  --primary-foreground: var(--color-white);
+}
+.dark[data-primary='blue'] {
+  --primary: var(--color-blue-500);
+  --primary-foreground: var(--color-white);
+}
+[data-primary='indigo'] {
+  --primary: var(--color-indigo-600);
+  --primary-foreground: var(--color-white);
+}
+.dark[data-primary='indigo'] {
+  --primary: var(--color-indigo-500);
+  --primary-foreground: var(--color-white);
+}
+[data-primary='violet'] {
+  --primary: var(--color-violet-600);
+  --primary-foreground: var(--color-white);
+}
+.dark[data-primary='violet'] {
+  --primary: var(--color-violet-500);
+  --primary-foreground: var(--color-white);
+}
+[data-primary='purple'] {
+  --primary: var(--color-purple-600);
+  --primary-foreground: var(--color-white);
+}
+.dark[data-primary='purple'] {
+  --primary: var(--color-purple-500);
+  --primary-foreground: var(--color-white);
+}
+[data-primary='emerald'] {
+  --primary: var(--color-emerald-600);
+  --primary-foreground: var(--color-white);
+}
+.dark[data-primary='emerald'] {
+  --primary: var(--color-emerald-500);
+  --primary-foreground: var(--color-white);
+}
+[data-primary='amber'] {
+  --primary: var(--color-amber-600);
+  --primary-foreground: var(--color-amber-950);
+}
+.dark[data-primary='amber'] {
+  --primary: var(--color-amber-500);
+  --primary-foreground: var(--color-amber-950);
+}
+[data-primary='rose'] {
+  --primary: var(--color-rose-600);
+  --primary-foreground: var(--color-white);
+}
+.dark[data-primary='rose'] {
+  --primary: var(--color-rose-500);
+  --primary-foreground: var(--color-white);
+}
+[data-primary='cyan'] {
+  --primary: var(--color-cyan-600);
+  --primary-foreground: var(--color-white);
+}
+.dark[data-primary='cyan'] {
+  --primary: var(--color-cyan-500);
+  --primary-foreground: var(--color-white);
+}
+
+/** Gradient primary presets – cool, pleasing combinations (--primary solid for border/text, --primary-bg for backgrounds) **/
+[data-primary='gradient_ocean'] {
+  --primary: var(--color-teal-600);
+  --primary-foreground: var(--color-white);
+  --primary-bg: linear-gradient(135deg, var(--color-cyan-500), var(--color-teal-600));
+}
+.dark[data-primary='gradient_ocean'] {
+  --primary: var(--color-teal-400);
+  --primary-foreground: var(--color-white);
+  --primary-bg: linear-gradient(135deg, var(--color-cyan-400), var(--color-teal-500));
+}
+[data-primary='gradient_sunset'] {
+  --primary: var(--color-rose-600);
+  --primary-foreground: var(--color-white);
+  --primary-bg: linear-gradient(135deg, var(--color-amber-400), var(--color-rose-500));
+}
+.dark[data-primary='gradient_sunset'] {
+  --primary: var(--color-rose-400);
+  --primary-foreground: var(--color-white);
+  --primary-bg: linear-gradient(135deg, var(--color-amber-500), var(--color-rose-400));
+}
+[data-primary='gradient_lavender'] {
+  --primary: var(--color-violet-600);
+  --primary-foreground: var(--color-white);
+  --primary-bg: linear-gradient(135deg, var(--color-violet-400), var(--color-pink-500));
+}
+.dark[data-primary='gradient_lavender'] {
+  --primary: var(--color-violet-400);
+  --primary-foreground: var(--color-white);
+  --primary-bg: linear-gradient(135deg, var(--color-violet-500), var(--color-pink-400));
+}
+[data-primary='gradient_mint'] {
+  --primary: var(--color-teal-600);
+  --primary-foreground: var(--color-white);
+  --primary-bg: linear-gradient(135deg, var(--color-emerald-400), var(--color-teal-500));
+}
+.dark[data-primary='gradient_mint'] {
+  --primary: var(--color-teal-400);
+  --primary-foreground: var(--color-white);
+  --primary-bg: linear-gradient(135deg, var(--color-emerald-500), var(--color-teal-400));
+}
+[data-primary='gradient_berry'] {
+  --primary: var(--color-purple-600);
+  --primary-foreground: var(--color-white);
+  --primary-bg: linear-gradient(135deg, var(--color-purple-500), var(--color-pink-500));
+}
+.dark[data-primary='gradient_berry'] {
+  --primary: var(--color-purple-400);
+  --primary-foreground: var(--color-white);
+  --primary-bg: linear-gradient(135deg, var(--color-purple-400), var(--color-pink-400));
+}
+[data-primary='gradient_aurora'] {
+  --primary: var(--color-violet-600);
+  --primary-foreground: var(--color-white);
+  --primary-bg: linear-gradient(135deg, var(--color-teal-500), var(--color-violet-500));
+}
+.dark[data-primary='gradient_aurora'] {
+  --primary: var(--color-violet-400);
+  --primary-foreground: var(--color-white);
+  --primary-bg: linear-gradient(135deg, var(--color-teal-400), var(--color-violet-400));
+}
+[data-primary='gradient_sage'] {
+  --primary: var(--color-emerald-700);
+  --primary-foreground: var(--color-white);
+  --primary-bg: linear-gradient(135deg, var(--color-emerald-500), var(--color-sky-500));
+}
+.dark[data-primary='gradient_sage'] {
+  --primary: var(--color-emerald-400);
+  --primary-foreground: var(--color-white);
+  --primary-bg: linear-gradient(135deg, var(--color-emerald-400), var(--color-sky-400));
+}
+[data-primary='gradient_rosegold'] {
+  --primary: var(--color-rose-600);
+  --primary-foreground: var(--color-white);
+  --primary-bg: linear-gradient(135deg, var(--color-rose-400), var(--color-amber-500));
+}
+.dark[data-primary='gradient_rosegold'] {
+  --primary: var(--color-rose-400);
+  --primary-foreground: var(--color-white);
+  --primary-bg: linear-gradient(135deg, var(--color-rose-500), var(--color-amber-400));
+}
+[data-primary='gradient_twilight'] {
+  --primary: var(--color-indigo-600);
+  --primary-foreground: var(--color-white);
+  --primary-bg: linear-gradient(135deg, var(--color-indigo-500), var(--color-fuchsia-500));
+}
+.dark[data-primary='gradient_twilight'] {
+  --primary: var(--color-indigo-400);
+  --primary-foreground: var(--color-white);
+  --primary-bg: linear-gradient(135deg, var(--color-indigo-400), var(--color-fuchsia-400));
+}
+[data-primary='gradient_coral'] {
+  --primary: var(--color-rose-600);
+  --primary-foreground: var(--color-white);
+  --primary-bg: linear-gradient(135deg, var(--color-orange-400), var(--color-rose-500));
+}
+.dark[data-primary='gradient_coral'] {
+  --primary: var(--color-rose-400);
+  --primary-foreground: var(--color-white);
+  --primary-bg: linear-gradient(135deg, var(--color-orange-500), var(--color-rose-400));
+}
+
+/** Use --primary-bg for .bg-primary when set (gradients), else --primary **/
+.bg-primary {
+  background: var(--primary-bg, var(--primary));
+}
+
+/** Theme Setup **/
+@theme inline {
+  /** Base Colors **/
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+
+  /** Base Styles **/
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+
+  /** Animations **/
+  --animate-marquee: marquee var(--duration) infinite linear;
+  --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(calc(-100% - var(--gap)));
+    }
+  }
+  @keyframes marquee-vertical {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(calc(-100% - var(--gap)));
+    }
+  }
+}
+
+/** Global Styles **/
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+
+  *:focus-visible {
+    @apply outline-ring rounded-xs shadow-none outline-2 outline-offset-3 transition-none!;
+  }
+}
+
+/** Custom Scrollbar **/
+@layer base {
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--input);
+    border-radius: 5px;
+  }
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--input) transparent;
+  }
+}
+
+/** Smooth scroll **/
+html {
+  scroll-behavior: smooth;
+}
+
+/** Custom Containers **/
+@utility container {
+  @apply mx-auto max-w-none px-4 lg:px-5;
+
+  @media (width >= --theme(--breakpoint-xl)) {
+    @apply max-w-(--breakpoint-xl);
+  }
+}
+
+@utility container-fluid {
+  @apply mx-auto w-full px-4 lg:px-5;
+}
+
+/* Smooth Transitions - Global */
+* {
+  @apply transition-colors duration-200 ease-in-out;
+}
+
+/* Transition Utilities */
+.transition-smooth {
+  @apply transition-all duration-300 ease-in-out;
+}
+
+.transition-fast {
+  @apply transition-all duration-150 ease-in-out;
+}
+
+.transition-slow {
+  @apply transition-all duration-500 ease-in-out;
+}
+
+.transition-bounce {
+  @apply transition-all duration-300 ease-out;
+}
+
+/* Hover Effects */
+.hover-lift {
+  @apply transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md;
+}
+
+.hover-scale {
+  @apply transition-transform duration-200 hover:scale-105 active:scale-95;
+}
+
+.hover-glow {
+  @apply hover:shadow-primary/20 transition-all duration-300 hover:shadow-lg;
+}
+
+/* Focus Effects */
+.focus-ring {
+  @apply focus-visible:ring-ring transition-all duration-200 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none;
+}
+
+/* Animation Keyframes */
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulse-subtle {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+/* Animation Classes */
+.animate-slide-in-right {
+  animation: slideInRight 0.3s ease-out;
+}
+
+.animate-slide-in-left {
+  animation: slideInLeft 0.3s ease-out;
+}
+
+.animate-slide-in-up {
+  animation: slideInUp 0.3s ease-out;
+}
+
+.animate-slide-in-down {
+  animation: slideInDown 0.3s ease-out;
+}
+
+.animate-fade-in {
+  width: 100% !important;
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Smooth enter for infinite-scroll product cards: fade + gentle slide up */
+@keyframes productCardEnter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-product-enter {
+  animation: productCardEnter 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Product card "added to cart": immediate, snappy tap + confirm */
+@keyframes productCardAddedToCart {
+  0% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(0.97);
+  }
+  65% {
+    transform: scale(1.02);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.product-card-added-to-cart {
+  animation: productCardAddedToCart 0.2s cubic-bezier(0.34, 1.2, 0.64, 1) forwards;
+}
+
+@keyframes productCardCheckIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  30% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.1);
+  }
+}
+.product-card-check {
+  animation: productCardCheckIn 0.2s ease-out forwards;
+  pointer-events: none;
+}
+
+/* Tab panel enter: smooth fade + short slide so tab switch doesn't feel laggy */
+@keyframes tabContentEnter {
+  from {
+    opacity: 0;
+    transform: translateX(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+.animate-tab-content-enter {
+  animation: tabContentEnter 0.25s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Scroll load-more spinner: smooth show/hide with transition (no lag, no flash) */
+.load-more-loader-visible {
+  opacity: 1;
+  transform: scale(1);
+  transition:
+    opacity 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.load-more-loader-hidden {
+  opacity: 0;
+  transform: scale(0.92);
+  pointer-events: none;
+  transition:
+    opacity 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.2s ease-out;
+}
+
+.animate-pulse-subtle {
+  animation: pulse-subtle 2s ease-in-out infinite;
+}
+
+.loader {
+  height: 5px;
+  width: 300px;
+  --gradient: linear-gradient(45deg, #ff0000, #ffb806);
+  --c: no-repeat var(--gradient);
+  background:
+    var(--c), var(--c), linear-gradient(90deg, rgba(255, 0, 0, 0.15), rgba(255, 184, 6, 0.15));
+  background-size: 60% 100%;
+
+  animation: l16 3s infinite;
+
+  border-radius: 999px;
+
+  /*box-shadow:
+    0 0 10px rgba(255, 0, 0, 0.35),
+    0 0 20px rgba(255, 184, 6, 0.25);*/
+}
+
+@keyframes l16 {
+  0% {
+    background-position:
+      -150% 0,
+      -150% 0;
+  }
+  66% {
+    background-position:
+      250% 0,
+      -150% 0;
+  }
+  100% {
+    background-position:
+      250% 0,
+      250% 0;
+  }
+}
+
+:root {
+  --sidebar-default-width: 280px;
+  --header-height: 70px;
+}

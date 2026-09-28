@@ -1,0 +1,27 @@
+# Keep build context small — never send these to the daemon.
+.git/
+.github/
+bin/
+coverage.out
+*.log
+/tmp/
+
+# Frontend — rebuilt inside Docker; never need host artifacts.
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+frontend/coverage/
+
+# Go build cache
+*.test
+*.exe
+
+# Local dev configs (may contain passwords) — docker uses config/docker.yaml
+config/config.yaml
+config.yaml
+
+# Editor / OS noise
+.idea/
+.vscode/
+*.swp
+.DS_Store
